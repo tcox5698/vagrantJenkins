@@ -2,8 +2,9 @@
 
 echo CLONING JOBS
 
-cd ~
+cd ~/jobs
 
 git clone /repos/railsplay_build.git
 
+cd ~ 
 echo FINISHED CLONING JOBS

@@ -72,5 +72,5 @@ echo JENKINS-GIT-CLONE-JOBS COMPLETE
 
 echo RELOADING JENKINS CONFIGURATION
 cd ~
-java -jar jenkins-cli.jar -s http://localhost:8080 reload-configuration
+java -jar /home/vagrant/work/jenkins-cli.jar -s http://localhost:8080 reload-configuration
 echo RELOADING JENKINS CONFIGURATION COMPLETE
