@@ -26,7 +26,7 @@ pg_dropcluster --stop 9.1 main
 pg_createcluster --start --locale en_US.UTF8 -e UTF-8 9.1 main
 sudo service postgresql stop
 sudo mv /etc/postgresql/9.1/main/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf.bak
-sudo mv /vagrant/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
+sudo cp /vagrant/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
 sudo service postgresql start
 echo CONFIGURE POSTGRES COMPLETE
 
@@ -47,7 +47,7 @@ if [ -e ./work/jenkins-cli.jar ]
   then echo jenkins-cli exists
   else
     cd work
-    sleep 10
+    sleep 20
     wget http://localhost:8080/jnlpJars/jenkins-cli.jar
     chmod a=rwx jenkins-cli.jar
     cd $SPATH
@@ -57,6 +57,10 @@ echo DOWNLOAD JENKINS CLIENT COMPLETE
 echo JENKINS-SETUP
 su -l jenkins /vagrant/jenkins-setup-rails.sh
 echo JENKINS-SETUP COMPLETE
+
+echo JENKINS-UPDATE RUBY ENV
+su -l jenkins /vagrant/jenkins-update-ruby-env.sh
+echo JENKINS UPDATE RUBY ENV COMPLETE
 
 echo JENKINS-INSTALL-PLUGINS
 /vagrant/jenkins-install-plugins.sh
