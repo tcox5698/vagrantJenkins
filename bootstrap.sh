@@ -16,7 +16,7 @@ echo CONFIGURING APT-JENKINS COMPLETE
 
 echo APT-GET INSTALLS
 sudo apt-get update
-sudo apt-get install -y git jenkins postgresql curl libxml2 libxslt-dev libxml2-dev libpq-dev nodejs libqtwebkit-dev
+sudo apt-get install -y git jenkins postgresql curl libxml2 libxslt-dev libxml2-dev libpq-dev nodejs libqtwebkit-dev xvfb
 echo APT-GET INSTALLS COMPLETE
 
 sudo usermod -a -G admin jenkins
