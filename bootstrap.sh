@@ -66,3 +66,11 @@ echo JENKINS-INSTALL-PLUGINS
 /vagrant/jenkins-install-plugins.sh
 echo JENKINS-INSTALL-PLUGINS-COMPLETE
 
+echo JENKINS-GIT-CLONE-JOBS
+su -l jenkins /vagrant/jenkins-git-clone-jobs.sh
+echo JENKINS-GIT-CLONE-JOBS COMPLETE
+
+echo RELOADING JENKINS CONFIGURATION
+cd ~
+java -jar jenkins-cli.jar -s http://localhost:8080 reload-configuration
+echo RELOADING JENKINS CONFIGURATION COMPLETE
