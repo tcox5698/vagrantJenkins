@@ -33,7 +33,15 @@ if [ -e gemrc-rvm-configged ]
     touch gemrc-rvm-configged
 fi
 
+gem update bundler
+
 echo CONFIG GEMRC COMPLETE
 
 git config --global user.email "jenkins@tcdev.com"
 git config --global user.name "Jenkins TCDEV"
+
+rvm cleanup all
+rvm pkg uninstall libxml2
+rvm reinstall all --force
+
+

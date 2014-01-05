@@ -2,6 +2,8 @@ SPATH=`pwd`
 
 set -e
 
+export LC_CTYPE="en_US.utf8"
+
 echo CONFIGURING APT-JENKINS
 if [ -e apt-jenkins-configured ]
   then echo apt jenkins configured
@@ -14,12 +16,24 @@ echo CONFIGURING APT-JENKINS COMPLETE
 
 echo APT-GET INSTALLS
 sudo apt-get update
-sudo apt-get install -y git
-sudo apt-get install -y jenkins
-sudo apt-get install -y postgresql
-sudo apt-get install -y curl
+sudo apt-get install -y git jenkins postgresql curl libxml2 libxslt-dev libxml2-dev libpq-dev nodejs libqtwebkit-dev
+echo APT-GET INSTALLS COMPLETE
 
 sudo usermod -a -G admin jenkins
+
+echo CONFIGURE POSTGRES
+pg_dropcluster --stop 9.1 main
+pg_createcluster --start --locale en_US.UTF8 -e UTF-8 9.1 main
+sudo service postgresql stop
+sudo mv /etc/postgresql/9.1/main/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf.bak
+sudo mv /vagrant/pg_hba.conf /etc/postgresql/9.1/main/pg_hba.conf
+sudo service postgresql start
+echo CONFIGURE POSTGRES COMPLETE
+
+
+echo CONFIG JENKINS USER IN POSTGRES
+sudo su - postgres bash -c 'createuser jenkins -s -d'
+echo CONFIG JENKINS USER IN POSTGRES COMPLETE
 
 echo MAKE WORK DIR
 if [ -e ./work ]
@@ -43,3 +57,8 @@ echo DOWNLOAD JENKINS CLIENT COMPLETE
 echo JENKINS-SETUP
 su -l jenkins /vagrant/jenkins-setup-rails.sh
 echo JENKINS-SETUP COMPLETE
+
+echo JENKINS-INSTALL-PLUGINS
+/vagrant/jenkins-install-plugins.sh
+echo JENKINS-INSTALL-PLUGINS-COMPLETE
+
